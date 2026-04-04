@@ -32,7 +32,7 @@ body {
   gap: 1.5rem;
 }
 
-/* ── Hero ── */
+/* ── Hero (emoji version — used on thanks.html) ── */
 .hero {
   text-align: center;
   padding-top: 0.5rem;
@@ -54,6 +54,42 @@ body {
   font-size: 0.95rem;
   color: var(--color-text-muted);
   margin-top: 0.25rem;
+}
+
+/* ── Hero photo version — used on index.html ── */
+.hero--photo {
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  padding: 0;
+}
+
+.hero__bg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(10, 14, 31, 0.75) 70%,
+    rgba(10, 14, 31, 0.95) 100%
+  );
+}
+
+.hero__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 1rem 1.25rem;
+  text-align: center;
 }
 
 /* ── Intro ── */
