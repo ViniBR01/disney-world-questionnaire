@@ -61,10 +61,15 @@
       ? '<span class="badge badge--' + exp.thrill + '">' + thrillLabel(exp.thrill) + '</span>'
       : '';
 
+    var hasPhoto = !!exp.photo;
+    var imgTag = hasPhoto
+      ? '<img class="card__img" src="' + exp.photo + '" alt="' + exp.name +
+          '" loading="lazy" onerror="document.getElementById(\'imgwrap-' + exp.id + '\').classList.add(\'card__img-wrap--error\')">'
+      : '';
+
     div.innerHTML =
-      '<div class="card__img-wrap" id="imgwrap-' + exp.id + '">' +
-        '<img class="card__img" src="' + exp.photo + '" alt="' + exp.name +
-          '" loading="lazy" onerror="document.getElementById(\'imgwrap-' + exp.id + '\').classList.add(\'card__img-wrap--error\')">' +
+      '<div class="card__img-wrap' + (hasPhoto ? '' : ' card__img-wrap--error') + '" id="imgwrap-' + exp.id + '">' +
+        imgTag +
         '<div class="card__img-fallback" aria-hidden="true">' + exp.emoji + '</div>' +
       '</div>' +
       '<div class="swipe-hint swipe-hint--skip" aria-hidden="true">Pular</div>' +
