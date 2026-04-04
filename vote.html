@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +7,36 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/app.css">
 </head>
-<body>
+<body class="page--vote">
   <main class="screen screen--vote" id="screen-vote">
-    <p class="coming-soon">Voting cards coming in M2 — <a href="index.html">Go back</a></p>
+
+    <header class="vote-header">
+      <button class="back-btn" id="back-btn" aria-label="Voltar ao início">←</button>
+      <div class="progress-bar-wrap" role="progressbar" aria-label="Progresso" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <span class="progress-text" id="progress-text" aria-live="polite">1 / 37</span>
+    </header>
+
+    <div class="card-stack" id="card-stack" aria-label="Atrações para avaliar">
+      <!-- Cards rendered by JS -->
+    </div>
+
+    <div class="vote-actions" role="group" aria-label="Avaliar atração">
+      <button class="action-btn action-btn--skip" id="btn-skip" aria-label="Pular esta atração">
+        <span class="action-icon" aria-hidden="true">✕</span>
+        <span class="action-label">Pular</span>
+      </button>
+      <button class="action-btn action-btn--superlike" id="btn-superlike" aria-label="Marcar como imperdível">
+        <span class="action-icon" aria-hidden="true">★</span>
+        <span class="action-label">Imperdível!</span>
+      </button>
+      <button class="action-btn action-btn--like" id="btn-like" aria-label="Curtir esta atração">
+        <span class="action-icon" aria-hidden="true">♥</span>
+        <span class="action-label">Curtir</span>
+      </button>
+    </div>
+
   </main>
 
   <script src="js/data.js"></script>
