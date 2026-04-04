@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magic Kingdom – Family Ride Ranker</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <main class="screen screen--name" id="screen-name">
+    <div class="hero">
+      <div class="hero__icon" aria-hidden="true">🏰</div>
+      <h1 class="hero__title">Magic Kingdom</h1>
+      <p class="hero__subtitle">Family Ride Ranker</p>
+    </div>
+
+    <p class="intro">
+      Go through all the rides, shows, and parades and tell us what you're most excited about.
+      We'll use everyone's answers to plan the perfect day!
+    </p>
+
+    <form id="name-form" class="name-form" novalidate>
+      <div class="form-group">
+        <label for="voter-name">Your name <span class="optional">(optional)</span></label>
+        <input
+          type="text"
+          id="voter-name"
+          name="voter-name"
+          placeholder="E.g. Grandma Rosa"
+          autocomplete="given-name"
+          maxlength="50"
+        >
+      </div>
+      <button type="submit" class="btn btn--primary" id="start-btn">
+        Let's go! →
+      </button>
+    </form>
+  </main>
+
+  <script src="js/index.js"></script>
+</body>
+</html>
