@@ -61,9 +61,10 @@
       ? '<span class="badge badge--' + exp.thrill + '">' + thrillLabel(exp.thrill) + '</span>'
       : '';
 
-    var hasPhoto = !!exp.photo;
+    var photo = exp.photos && exp.photos.length > 0 ? exp.photos[0] : '';
+    var hasPhoto = !!photo;
     var imgTag = hasPhoto
-      ? '<img class="card__img" src="' + exp.photo + '" alt="' + exp.name +
+      ? '<img class="card__img" src="' + photo + '" alt="' + exp.name +
           '" loading="lazy" onerror="document.getElementById(\'imgwrap-' + exp.id + '\').classList.add(\'card__img-wrap--error\')">'
       : '';
 
