@@ -74,13 +74,17 @@ test.describe('M2 — Card UI', () => {
 
   test('redirects to results when all cards already voted', async ({ page }) => {
     await page.goto('/vote.html');
-    // Simulate having voted all cards
+    // Simulate having voted all cards with real votes so results.html doesn't redirect back
     await page.evaluate((total) => {
+      var votes = {};
+      EXPERIENCES.forEach(function (exp) { votes[exp.id] = 'like'; });
       sessionStorage.setItem('currentCardIndex', String(total));
-      sessionStorage.setItem('votes', '{}');
+      sessionStorage.setItem('votes', JSON.stringify(votes));
     }, TOTAL);
-    await page.reload();
-    await expect(page).toHaveURL(/\/results/);
+    await Promise.all([
+      page.waitForURL(/\/results/, { timeout: 5000 }),
+      page.goto('/vote.html'),
+    ]);
   });
 
   test('resumes from saved index on reload', async ({ page }) => {

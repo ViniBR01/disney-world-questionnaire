@@ -7,9 +7,57 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/app.css">
 </head>
-<body>
+<body class="page--results">
   <main class="screen screen--results" id="screen-results">
-    <p class="coming-soon">Tela de resultados disponível em breve — <a href="index.html">Voltar ao início</a></p>
+
+    <header class="results-header">
+      <button class="back-btn" id="back-btn" aria-label="Rever atrações">←</button>
+      <h1 class="results-header__title">Suas Escolhas</h1>
+    </header>
+
+    <div class="results-body" id="results-body">
+
+      <div class="results-intro">
+        <p id="voter-greeting" class="voter-greeting"></p>
+        <p class="edit-hint">Toque em qualquer item para mudar seu voto.</p>
+      </div>
+
+      <section class="results-section" id="results-section-superlike">
+        <h2 class="results-section__heading results-section__heading--superlike">
+          <span class="results-section__label">★ Imperdível!</span>
+          <span class="results-count" id="count-superlike" aria-label="total">0</span>
+        </h2>
+        <div id="section-superlike" class="results-list" role="list"></div>
+        <p class="results-empty" id="empty-superlike" hidden>Nenhuma atração nesta categoria ainda.</p>
+      </section>
+
+      <section class="results-section" id="results-section-like">
+        <h2 class="results-section__heading results-section__heading--like">
+          <span class="results-section__label">♥ Curtir</span>
+          <span class="results-count" id="count-like" aria-label="total">0</span>
+        </h2>
+        <div id="section-like" class="results-list" role="list"></div>
+        <p class="results-empty" id="empty-like" hidden>Nenhuma atração nesta categoria ainda.</p>
+      </section>
+
+      <section class="results-section" id="results-section-skip">
+        <h2 class="results-section__heading results-section__heading--skip">
+          <span class="results-section__label">✕ Pular</span>
+          <span class="results-count" id="count-skip" aria-label="total">0</span>
+        </h2>
+        <div id="section-skip" class="results-list" role="list"></div>
+        <p class="results-empty" id="empty-skip" hidden>Nenhuma atração nesta categoria ainda.</p>
+      </section>
+
+    </div>
+
+    <footer class="results-footer">
+      <button class="btn btn--primary btn--submit" id="btn-submit" disabled aria-disabled="true">
+        Enviar Respostas
+      </button>
+      <p class="submit-note" id="submit-note">Envio de respostas disponível em breve</p>
+    </footer>
+
   </main>
 
   <script src="js/data.js"></script>
