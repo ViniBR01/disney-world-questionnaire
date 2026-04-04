@@ -2,15 +2,19 @@
   var votes = {};
   var voterName = '';
   var currentEditId = null;
+  var submitting = false;
 
   // ── DOM refs ──────────────────────────────────────────────────────────────
-  var backdrop   = document.getElementById('action-sheet-backdrop');
-  var asEmoji    = document.getElementById('as-emoji');
-  var asTitle    = document.getElementById('as-title');
+  var backdrop    = document.getElementById('action-sheet-backdrop');
+  var asEmoji     = document.getElementById('as-emoji');
+  var asTitle     = document.getElementById('as-title');
   var asSuperlike = document.getElementById('as-superlike');
-  var asLike     = document.getElementById('as-like');
-  var asSkip     = document.getElementById('as-skip');
-  var asCancel   = document.getElementById('as-cancel');
+  var asLike      = document.getElementById('as-like');
+  var asSkip      = document.getElementById('as-skip');
+  var asCancel    = document.getElementById('as-cancel');
+  var submitBtn   = document.getElementById('btn-submit');
+  var submitNote  = document.getElementById('submit-note');
+  var submitError = document.getElementById('submit-error');
 
   // ── Init ──────────────────────────────────────────────────────────────────
   function init() {
@@ -27,6 +31,13 @@
       ? 'Olá, ' + voterName + '! Confira suas escolhas abaixo.'
       : 'Confira suas escolhas abaixo.';
 
+    // Enable submit if Supabase is configured
+    if (window.SUPABASE_URL && window.SUPABASE_ANON_KEY) {
+      submitBtn.disabled = false;
+      submitBtn.removeAttribute('aria-disabled');
+      submitNote.hidden = true;
+    }
+
     render();
     bindControls();
   }
@@ -35,8 +46,7 @@
   function render() {
     var buckets = { superlike: [], like: [], skip: [] };
     EXPERIENCES.forEach(function (exp) {
-      var v = votes[exp.id] || 'skip';
-      buckets[v].push(exp);
+      buckets[votes[exp.id] || 'skip'].push(exp);
     });
     renderSection('section-superlike', 'empty-superlike', 'count-superlike', buckets.superlike, 'superlike');
     renderSection('section-like',      'empty-like',      'count-like',      buckets.like,      'like');
@@ -89,18 +99,15 @@
     asEmoji.textContent = exp.emoji;
     asTitle.textContent = exp.name;
 
-    // Highlight the current vote
     [asSuperlike, asLike, asSkip].forEach(function (btn) {
       btn.classList.remove('action-sheet__option--active');
     });
-    var activeBtn = { superlike: asSuperlike, like: asLike, skip: asSkip }[reaction];
-    if (activeBtn) activeBtn.classList.add('action-sheet__option--active');
+    ({ superlike: asSuperlike, like: asLike, skip: asSkip })[reaction]
+      .classList.add('action-sheet__option--active');
 
     backdrop.hidden = false;
     backdrop.removeAttribute('aria-hidden');
     document.body.style.overflow = 'hidden';
-
-    // Focus first option for keyboard/a11y
     asSuperlike.focus();
   }
 
@@ -119,6 +126,29 @@
     render();
   }
 
+  // ── Submit ────────────────────────────────────────────────────────────────
+  function handleSubmit() {
+    if (submitting) return;
+    submitError.hidden = true;
+    submitting = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    window.submitVotes(
+      voterName || null,
+      votes,
+      function () {
+        window.location.href = 'thanks.html';
+      },
+      function () {
+        submitting = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar Respostas';
+        submitError.hidden = false;
+      }
+    );
+  }
+
   // ── Controls ──────────────────────────────────────────────────────────────
   function bindControls() {
     asSuperlike.addEventListener('click', function () { setVote('superlike'); });
@@ -126,12 +156,10 @@
     asSkip.addEventListener('click',      function () { setVote('skip'); });
     asCancel.addEventListener('click', closeSheet);
 
-    // Tap outside the sheet panel closes it
     backdrop.addEventListener('click', function (e) {
       if (e.target === backdrop) closeSheet();
     });
 
-    // Escape key
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !backdrop.hidden) closeSheet();
     });
@@ -141,9 +169,7 @@
       window.location.href = 'vote.html';
     });
 
-    document.getElementById('btn-submit').addEventListener('click', function () {
-      // Handled in M4 via supabase.js
-    });
+    submitBtn.addEventListener('click', handleSubmit);
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────────

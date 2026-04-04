@@ -653,6 +653,15 @@ body.page--results {
   text-align: center;
 }
 
+.submit-error {
+  font-size: 0.8rem;
+  color: #f05070;
+  text-align: center;
+  padding: 0.4rem 0.5rem;
+  border-radius: 8px;
+  background: rgba(240, 80, 112, 0.08);
+}
+
 /* ── Vote indicator (replaces cycle button) ── */
 .vote-indicator {
   flex-shrink: 0;

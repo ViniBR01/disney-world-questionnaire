@@ -55,7 +55,8 @@
       <button class="btn btn--primary btn--submit" id="btn-submit" disabled aria-disabled="true">
         Enviar Respostas
       </button>
-      <p class="submit-note" id="submit-note">Envio de respostas disponível em breve</p>
+      <p class="submit-note" id="submit-note">Configure o Supabase para ativar o envio</p>
+      <p class="submit-error" id="submit-error" hidden>Erro ao enviar. Verifique sua conexão e tente novamente.</p>
     </footer>
 
   </main>
@@ -89,7 +90,9 @@
     </div>
   </div>
 
+  <script src="js/env.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/supabase.js"></script>
   <script src="js/results.js"></script>
 </body>
 </html>
