@@ -54,31 +54,73 @@ test.describe('M3 — Results & Edit', () => {
     await expect(page.locator('#count-skip')).toHaveText('0');
   });
 
-  test('tapping an item cycles its vote', async ({ page }) => {
+  test('tapping an item opens the action sheet', async ({ page }) => {
     await seedVotes(page, 'like');
     await page.goto('/results.html');
-    // All 37 are in "like" — tap first item → moves to skip
     await page.locator('#section-like .result-item').first().click();
+    await expect(page.locator('#action-sheet-backdrop')).not.toHaveAttribute('hidden');
+    await expect(page.locator('#action-sheet')).toBeVisible();
+  });
+
+  test('action sheet shows the item name', async ({ page }) => {
+    await seedVotes(page, 'like');
+    await page.goto('/results.html');
+    const itemName = await page.locator('#section-like .result-item .result-item__name').first().textContent();
+    await page.locator('#section-like .result-item').first().click();
+    await expect(page.locator('#as-title')).toHaveText(itemName);
+  });
+
+  test('action sheet highlights the current vote', async ({ page }) => {
+    await seedVotes(page, 'superlike');
+    await page.goto('/results.html');
+    await page.locator('#section-superlike .result-item').first().click();
+    await expect(page.locator('#as-superlike')).toHaveClass(/action-sheet__option--active/);
+    await expect(page.locator('#as-like')).not.toHaveClass(/action-sheet__option--active/);
+  });
+
+  test('choosing an option moves item to correct section', async ({ page }) => {
+    await seedVotes(page, 'like');
+    await page.goto('/results.html');
+    await page.locator('#section-like .result-item').first().click();
+    await page.locator('#as-superlike').click();
+    await expect(page.locator('#count-like')).toHaveText('36');
+    await expect(page.locator('#count-superlike')).toHaveText('1');
+  });
+
+  test('choosing skip moves item to skip section', async ({ page }) => {
+    await seedVotes(page, 'like');
+    await page.goto('/results.html');
+    await page.locator('#section-like .result-item').first().click();
+    await page.locator('#as-skip').click();
     await expect(page.locator('#count-like')).toHaveText('36');
     await expect(page.locator('#count-skip')).toHaveText('1');
   });
 
-  test('cycle goes superlike → like → skip → superlike', async ({ page }) => {
-    await seedVotes(page, 'superlike');
+  test('action sheet closes after selecting an option', async ({ page }) => {
+    await seedVotes(page, 'like');
     await page.goto('/results.html');
-    const first = page.locator('#section-superlike .result-item').first();
-    // superlike → like
-    await first.click();
-    await expect(page.locator('#count-superlike')).toHaveText('36');
-    await expect(page.locator('#count-like')).toHaveText('1');
-    // like → skip
     await page.locator('#section-like .result-item').first().click();
-    await expect(page.locator('#count-like')).toHaveText('0');
-    await expect(page.locator('#count-skip')).toHaveText('1');
-    // skip → superlike
-    await page.locator('#section-skip .result-item').first().click();
-    await expect(page.locator('#count-skip')).toHaveText('0');
-    await expect(page.locator('#count-superlike')).toHaveText('37');
+    await page.locator('#as-superlike').click();
+    await expect(page.locator('#action-sheet-backdrop')).toHaveAttribute('hidden');
+  });
+
+  test('cancel button closes sheet without changing vote', async ({ page }) => {
+    await seedVotes(page, 'like');
+    await page.goto('/results.html');
+    await page.locator('#section-like .result-item').first().click();
+    await page.locator('#as-cancel').click();
+    await expect(page.locator('#action-sheet-backdrop')).toHaveAttribute('hidden');
+    await expect(page.locator('#count-like')).toHaveText('37');
+  });
+
+  test('tapping backdrop closes sheet without changing vote', async ({ page }) => {
+    await seedVotes(page, 'like');
+    await page.goto('/results.html');
+    await page.locator('#section-like .result-item').first().click();
+    // Click on the backdrop itself (outside the sheet panel)
+    await page.locator('#action-sheet-backdrop').click({ position: { x: 10, y: 10 } });
+    await expect(page.locator('#action-sheet-backdrop')).toHaveAttribute('hidden');
+    await expect(page.locator('#count-like')).toHaveText('37');
   });
 
   test('vote change persists in sessionStorage', async ({ page }) => {
@@ -86,8 +128,9 @@ test.describe('M3 — Results & Edit', () => {
     await page.goto('/results.html');
     const firstName = await page.locator('#section-like .result-item').first().getAttribute('data-id');
     await page.locator('#section-like .result-item').first().click();
+    await page.locator('#as-superlike').click();
     const votes = await page.evaluate(() => JSON.parse(sessionStorage.getItem('votes') || '{}'));
-    expect(votes[firstName]).toBe('skip');
+    expect(votes[firstName]).toBe('superlike');
   });
 
   test('submit button is present and disabled in M3', async ({ page }) => {

@@ -19,7 +19,7 @@
 
       <div class="results-intro">
         <p id="voter-greeting" class="voter-greeting"></p>
-        <p class="edit-hint">Toque em qualquer item para mudar seu voto.</p>
+        <p class="edit-hint">Toque em qualquer item para alterar sua avaliação.</p>
       </div>
 
       <section class="results-section" id="results-section-superlike">
@@ -59,6 +59,35 @@
     </footer>
 
   </main>
+
+  <!-- Action sheet -->
+  <div id="action-sheet-backdrop" class="action-sheet-backdrop" hidden aria-hidden="true">
+    <div id="action-sheet" class="action-sheet" role="dialog" aria-modal="true" aria-labelledby="as-title">
+      <div class="action-sheet__header">
+        <span class="action-sheet__emoji" id="as-emoji" aria-hidden="true"></span>
+        <span class="action-sheet__name" id="as-title"></span>
+      </div>
+      <p class="action-sheet__hint">Como você quer avaliar esta atração?</p>
+      <div class="action-sheet__options">
+        <button class="action-sheet__option action-sheet__option--superlike" id="as-superlike">
+          <span class="as-option__icon" aria-hidden="true">★</span>
+          <span class="as-option__label">Imperdível!</span>
+          <span class="as-option__check" aria-hidden="true">✓</span>
+        </button>
+        <button class="action-sheet__option action-sheet__option--like" id="as-like">
+          <span class="as-option__icon" aria-hidden="true">♥</span>
+          <span class="as-option__label">Curtir</span>
+          <span class="as-option__check" aria-hidden="true">✓</span>
+        </button>
+        <button class="action-sheet__option action-sheet__option--skip" id="as-skip">
+          <span class="as-option__icon" aria-hidden="true">✕</span>
+          <span class="as-option__label">Pular</span>
+          <span class="as-option__check" aria-hidden="true">✓</span>
+        </button>
+      </div>
+      <button class="action-sheet__cancel" id="as-cancel">Cancelar</button>
+    </div>
+  </div>
 
   <script src="js/data.js"></script>
   <script src="js/results.js"></script>

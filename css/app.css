@@ -652,3 +652,166 @@ body.page--results {
   color: var(--color-text-muted);
   text-align: center;
 }
+
+/* ── Vote indicator (replaces cycle button) ── */
+.vote-indicator {
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.vote-indicator--superlike { background: rgba(245, 197, 24, 0.12); color: var(--color-gold); }
+.vote-indicator--like      { background: rgba(82, 196, 122, 0.12); color: #52c47a; }
+.vote-indicator--skip      { background: rgba(255, 255, 255, 0.05); color: var(--color-text-muted); }
+
+/* ══════════════════════════════════════════════════════
+   ACTION SHEET
+   ══════════════════════════════════════════════════════ */
+
+@keyframes fade-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+.action-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fade-in 0.15s ease;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.action-sheet {
+  width: 100%;
+  max-width: 540px;
+  background: #1c2040;
+  border-radius: 20px 20px 0 0;
+  padding: 1.25rem 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: slide-up 0.22s ease;
+}
+
+.action-sheet__header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.action-sheet__emoji { font-size: 1.5rem; }
+
+.action-sheet__name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.action-sheet__hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.action-sheet__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.action-sheet__option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  text-align: left;
+}
+
+.action-sheet__option:active { transform: scale(0.98); }
+
+.as-option__icon {
+  font-size: 1.1rem;
+  width: 1.5rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.as-option__label {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.as-option__check {
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+/* Active (current vote) state */
+.action-sheet__option--active .as-option__check { opacity: 1; }
+
+.action-sheet__option--superlike { border-color: rgba(245, 197, 24, 0.3); }
+.action-sheet__option--superlike .as-option__icon { color: var(--color-gold); }
+.action-sheet__option--superlike .as-option__check { color: var(--color-gold); }
+.action-sheet__option--superlike:hover,
+.action-sheet__option--superlike.action-sheet__option--active {
+  background: rgba(245, 197, 24, 0.08);
+  border-color: var(--color-gold);
+}
+
+.action-sheet__option--like { border-color: rgba(82, 196, 122, 0.3); }
+.action-sheet__option--like .as-option__icon { color: #52c47a; }
+.action-sheet__option--like .as-option__check { color: #52c47a; }
+.action-sheet__option--like:hover,
+.action-sheet__option--like.action-sheet__option--active {
+  background: rgba(82, 196, 122, 0.08);
+  border-color: #52c47a;
+}
+
+.action-sheet__option--skip { border-color: rgba(255, 255, 255, 0.1); }
+.action-sheet__option--skip .as-option__icon { color: var(--color-text-muted); }
+.action-sheet__option--skip .as-option__check { color: var(--color-text-muted); }
+.action-sheet__option--skip:hover,
+.action-sheet__option--skip.action-sheet__option--active {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-text-muted);
+}
+
+.action-sheet__cancel {
+  margin-top: 0.25rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s;
+}
+
+.action-sheet__cancel:hover { background: rgba(255, 255, 255, 0.09); }
