@@ -687,11 +687,15 @@ body.page--results {
 .btn-cycle--like:active      { background: rgba(82, 196, 122, 0.15); }
 .btn-cycle--skip:active      { background: rgba(255, 255, 255, 0.06); }
 
-/* ── Footer ── */
+/* ── Footer — sticky at bottom ── */
 .results-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
   padding: 0.875rem 1rem;
   background: var(--color-bg);
   border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -774,6 +778,38 @@ body.page--results {
   animation: slide-up 0.22s ease;
 }
 
+/* ── Action sheet photo gallery ── */
+.as-photos {
+  position: relative;
+  margin: -1.25rem -1rem 0.75rem; /* bleed to sheet edges + spacing below */
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0; /* match action-sheet top corners */
+  background: var(--color-border);
+  cursor: grab;
+  flex-shrink: 0;
+}
+
+.as-photos:active { cursor: grabbing; }
+
+.as-photo-strip {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.as-photo-strip img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+/* ── Action sheet header ── */
 .action-sheet__header {
   display: flex;
   align-items: center;

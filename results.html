@@ -64,6 +64,16 @@
   <!-- Action sheet -->
   <div id="action-sheet-backdrop" class="action-sheet-backdrop" hidden aria-hidden="true">
     <div id="action-sheet" class="action-sheet" role="dialog" aria-modal="true" aria-labelledby="as-title">
+
+      <!-- Photo gallery -->
+      <div class="as-photos" id="as-photos">
+        <div class="as-photo-strip" id="as-photo-strip"></div>
+        <div class="photo-dots" id="as-photo-dots" aria-hidden="true"></div>
+        <button class="photo-nav photo-nav--prev photo-nav--hidden" id="as-photo-prev" aria-label="Foto anterior" tabindex="-1">&#8249;</button>
+        <button class="photo-nav photo-nav--next photo-nav--hidden" id="as-photo-next" aria-label="Próxima foto" tabindex="-1">&#8250;</button>
+        <div class="card__img-fallback" id="as-photo-fallback" aria-hidden="true"></div>
+      </div>
+
       <div class="action-sheet__header">
         <span class="action-sheet__emoji" id="as-emoji" aria-hidden="true"></span>
         <span class="action-sheet__name" id="as-title"></span>
