@@ -207,6 +207,7 @@ body.page--vote {
   display: grid;
   grid-template-rows: auto 1fr auto;
   overflow: hidden;
+  position: relative; /* contains nav-panel and nav-backdrop */
 }
 
 /* ── Header ── */
@@ -239,7 +240,10 @@ body.page--vote {
   background: var(--color-border);
   border-radius: 3px;
   overflow: hidden;
+  cursor: pointer;
 }
+
+.progress-text { cursor: pointer; }
 
 .progress-bar {
   height: 100%;
@@ -430,9 +434,14 @@ body.page--vote {
 }
 
 .catbar__year {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
 }
 
 /* ── Card name ── */
@@ -551,6 +560,156 @@ body.page--vote {
   padding: 0.85rem 1.3rem;
 }
 .action-btn--superlike:active { background: rgba(245, 197, 24, 0.1); }
+
+/* ── Nav toggle button (right of progress bar) ── */
+.nav-toggle {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem 0.35rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--transition), background var(--transition);
+}
+
+.nav-toggle:hover { color: var(--color-text); }
+.nav-toggle[aria-expanded="true"] {
+  color: var(--color-primary-hover);
+  background: rgba(124, 92, 191, 0.15);
+}
+
+/* ── Navigation panel ── */
+@keyframes panel-slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.nav-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* top and max-height set by JS */
+  z-index: 25;
+  background: #141829;
+  border-radius: 0 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+  animation: panel-slide-down 0.2s ease;
+}
+
+.nav-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.nav-panel__title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.nav-panel__close {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--transition);
+}
+
+.nav-panel__close:hover { color: var(--color-text); }
+
+.nav-panel__list {
+  overflow-y: auto;
+  flex: 1;
+  overscroll-behavior: contain;
+}
+
+/* ── Nav list items ── */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: background 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-item:not(.nav-item--current):hover  { background: rgba(255, 255, 255, 0.05); }
+.nav-item:not(.nav-item--current):active { background: rgba(255, 255, 255, 0.08); }
+
+.nav-item--current {
+  background: rgba(124, 92, 191, 0.18);
+  cursor: default;
+}
+
+.nav-item__num {
+  font-size: 0.62rem;
+  color: var(--color-text-muted);
+  min-width: 1.4rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Subcategory color dot */
+.nav-item__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.nav-item__name {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-item--current .nav-item__name {
+  color: var(--color-primary-hover);
+  font-weight: 700;
+}
+
+.nav-vote {
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  min-width: 1rem;
+  text-align: center;
+}
+
+.nav-vote--superlike { color: var(--color-gold); }
+.nav-vote--like      { color: #52c47a; }
+.nav-vote--skip      { color: var(--color-text-muted); opacity: 0.5; }
+
+/* ── Backdrop (transparent — closes panel on click) ── */
+.nav-backdrop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* top and bottom set by JS */
+  z-index: 15;
+  cursor: pointer;
+}
 
 /* ══════════════════════════════════════════════════════
    RESULTS SCREEN

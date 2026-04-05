@@ -1,4 +1,17 @@
 /* eslint-disable no-unused-vars */
+
+// Interleaved display order so types don't cluster together
+var EXPERIENCE_ORDER = [
+  'seven_dwarfs','haunted_mansion','tron','jungle_cruise','festival_fantasy',
+  'space_mountain','philharmagic','pirates','dumbo','tianas_bayou',
+  'peter_pan','magical_friendship','peoplemover','barnstormer','its_a_small_world',
+  'monsters_inc','wdw_railroad','happily_ever_after','winnie_the_pooh','enchanted_belle',
+  'mad_tea_party','little_mermaid','carousel_progress','astro_orbiter','buzz_lightyear',
+  'country_bear','magic_carpets','starlight','hall_presidents','tiki_room',
+  'tomorrowland_speedway','adventure_cavalcade','prince_charming','main_street_vehicles',
+  'swiss_family','caseys_pianist','dapper_dans'
+];
+
 var SUBCATEGORIES = {
   coaster:  { label: 'Montanhas-Russas',       bg: '#b71c1c', fg: '#fff', icon: '🎢' },
   darkride: { label: 'Passeios Lentos',        bg: '#1a237e', fg: '#fff', icon: '⛵' },
@@ -46,7 +59,7 @@ var EXPERIENCES = [
     category: 'ride', thrill: 'moderate', emoji: '🐸',
     photos: ['assets/photos/tianas_bayou/01.jpg','assets/photos/tianas_bayou/02.jpg','assets/photos/tianas_bayou/03.jpg'],
     year: 2024, speed: '64 km/h (queda final)', duration: '11 min',
-    description: 'Log flume com cenários musicais de Louisiana culminando em uma descida vertiginosa — você VAI se molhar!',
+    description: 'Splash com cenários musicais de Louisiana culminando em uma descida vertiginosa — você VAI se molhar!',
     tip: 'Leve muda de roupa ou capa descartável. Melhor de manhã, antes do calor.'
   },
   {
@@ -388,3 +401,10 @@ var EXPERIENCES = [
     tip: 'Às 21h30. Posicione-se na Main Street antes das 21h — lota muito! Traga lenços.'
   }
 ];
+
+// Sort in-place so all scripts get the interleaved order
+EXPERIENCES.sort(function (a, b) {
+  var ai = EXPERIENCE_ORDER.indexOf(a.id);
+  var bi = EXPERIENCE_ORDER.indexOf(b.id);
+  return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+});

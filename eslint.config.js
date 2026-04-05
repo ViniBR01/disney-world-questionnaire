@@ -8,6 +8,7 @@ export default [
         ...globals.browser,
         EXPERIENCES: 'readonly',
         SUBCATEGORIES: 'readonly',
+        EXPERIENCE_ORDER: 'readonly',
       },
       ecmaVersion: 2022,
       sourceType: 'script',

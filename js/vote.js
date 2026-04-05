@@ -4,10 +4,13 @@
   var total = EXPERIENCES.length;
   var photoIndex = 0;  // resets to 0 on each new card
   var voting = false;  // prevents double-vote while card animates out
+  var navOpen = false;
 
   var stack = document.getElementById('card-stack');
   var progressBar = document.getElementById('progress-bar');
   var progressText = document.getElementById('progress-text');
+  var navPanel = document.getElementById('nav-panel');
+  var navBackdrop = document.getElementById('nav-backdrop');
 
   // ── Init ──────────────────────────────────────────────────────────────────
   function init() {
@@ -245,6 +248,7 @@
 
   function advanceAfterVote() {
     voting = false;
+    if (navOpen) closeNav();
     idx++;
     sessionStorage.setItem('currentCardIndex', String(idx));
     if (idx >= total) {
@@ -282,6 +286,85 @@
 
     document.getElementById('back-btn').addEventListener('click', function () {
       window.location.href = 'index.html';
+    });
+
+    // Progress bar + toggle open the nav panel
+    document.getElementById('progress-bar-wrap').addEventListener('click', function () {
+      if (!navOpen) openNav();
+    });
+    document.getElementById('progress-text').addEventListener('click', function () {
+      if (!navOpen) openNav();
+    });
+    document.getElementById('nav-toggle').addEventListener('click', function () {
+      if (navOpen) closeNav(); else openNav();
+    });
+    document.getElementById('nav-close').addEventListener('click', closeNav);
+    navBackdrop.addEventListener('click', closeNav);
+  }
+
+  // ── Navigation panel ──────────────────────────────────────────────────────
+  function openNav() {
+    var header  = document.querySelector('.vote-header');
+    var actions = document.querySelector('.vote-actions');
+    var hH = header.offsetHeight;
+    var aH = actions.offsetHeight;
+
+    // Position: below header, leaving ~80px of card visible above vote buttons
+    navPanel.style.top = hH + 'px';
+    navPanel.style.maxHeight = (window.innerHeight - hH - aH - 80) + 'px';
+    navBackdrop.style.top = hH + 'px';
+    navBackdrop.style.bottom = aH + 'px';
+
+    buildNavList();
+    navPanel.hidden = false;
+    navBackdrop.hidden = false;
+    document.getElementById('nav-toggle').setAttribute('aria-expanded', 'true');
+    navOpen = true;
+
+    // Scroll current item into view
+    var current = navPanel.querySelector('.nav-item--current');
+    if (current) current.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  function closeNav() {
+    navPanel.hidden = true;
+    navBackdrop.hidden = true;
+    document.getElementById('nav-toggle').setAttribute('aria-expanded', 'false');
+    navOpen = false;
+  }
+
+  function buildNavList() {
+    var list = document.getElementById('nav-list');
+    list.innerHTML = '';
+
+    EXPERIENCES.forEach(function (exp, i) {
+      var div = document.createElement('div');
+      div.className = 'nav-item' + (i === idx ? ' nav-item--current' : '');
+      div.setAttribute('role', 'listitem');
+
+      var v = votes[exp.id];
+      var vIcon  = v === 'superlike' ? '★' : v === 'like' ? '♥' : v === 'skip' ? '✕' : '';
+      var vClass = v ? 'nav-vote nav-vote--' + v : 'nav-vote';
+      var subcat = SUBCATEGORIES[exp.subcategory] || SUBCATEGORIES.show;
+
+      div.innerHTML =
+        '<span class="nav-item__num">' + (i + 1) + '</span>' +
+        '<span class="nav-item__dot" style="background:' + subcat.bg + '" aria-hidden="true"></span>' +
+        '<span class="nav-item__name">' + exp.name + '</span>' +
+        '<span class="' + vClass + '" aria-hidden="true">' + vIcon + '</span>';
+
+      if (i !== idx) {
+        div.addEventListener('click', function () {
+          idx = i;
+          photoIndex = 0;
+          sessionStorage.setItem('currentCardIndex', String(idx));
+          updateProgress();
+          renderCards();
+          closeNav();
+        });
+      }
+
+      list.appendChild(div);
     });
   }
 

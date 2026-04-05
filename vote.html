@@ -12,10 +12,11 @@
 
     <header class="vote-header">
       <button class="back-btn" id="back-btn" aria-label="Voltar ao início">←</button>
-      <div class="progress-bar-wrap" role="progressbar" aria-label="Progresso" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar-wrap" id="progress-bar-wrap" role="progressbar" aria-label="Progresso" aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar" id="progress-bar"></div>
       </div>
       <span class="progress-text" id="progress-text" aria-live="polite">1 / 37</span>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Ver lista de atrações" aria-expanded="false">≡</button>
     </header>
 
     <div class="card-stack" id="card-stack" aria-label="Atrações para avaliar">
@@ -36,6 +37,17 @@
         <span class="action-label">Curtir</span>
       </button>
     </div>
+
+    <!-- Navigation panel — slides down over the card area -->
+    <div class="nav-panel" id="nav-panel" hidden>
+      <div class="nav-panel__header">
+        <span class="nav-panel__title">Todas as Atrações</span>
+        <button class="nav-panel__close" id="nav-close" aria-label="Fechar lista">✕</button>
+      </div>
+      <div class="nav-panel__list" id="nav-list" role="list"></div>
+    </div>
+    <!-- Transparent backdrop — clicking it closes the panel -->
+    <div class="nav-backdrop" id="nav-backdrop" hidden></div>
 
   </main>
 
