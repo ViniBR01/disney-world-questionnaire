@@ -49,6 +49,69 @@
     <!-- Transparent backdrop — clicking it closes the panel -->
     <div class="nav-backdrop" id="nav-backdrop" hidden></div>
 
+    <!-- First-visit tutorial overlay -->
+    <div class="tutorial-overlay" id="tutorial-overlay" hidden>
+      <div class="tutorial-backdrop" id="tutorial-backdrop"></div>
+      <div class="tutorial-panel">
+
+        <div class="tutorial-header">
+          <span class="tutorial-title" id="tut-title">Como explorar</span>
+          <div class="tutorial-dots" aria-hidden="true">
+            <span class="tut-dot tut-dot--active" id="tut-dot-1"></span>
+            <span class="tut-dot" id="tut-dot-2"></span>
+          </div>
+        </div>
+
+        <!-- Slide 1: Navigation -->
+        <div class="tutorial-slide" id="tut-slide-1">
+          <div class="tut-row">
+            <div class="tut-icon-wrap tut-icon-wrap--neutral" aria-hidden="true">⟵⟶</div>
+            <div class="tut-content">
+              <strong>Deslize as fotos</strong>
+              <p>Arraste para os lados na imagem para ver mais fotos da atração</p>
+            </div>
+          </div>
+          <div class="tut-row">
+            <div class="tut-icon-wrap tut-icon-wrap--neutral" aria-hidden="true">≡</div>
+            <div class="tut-content">
+              <strong>Navegue direto</strong>
+              <p>Toque na barra de progresso ou ≡ para ir direto a qualquer atração</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Voting -->
+        <div class="tutorial-slide" id="tut-slide-2" hidden>
+          <div class="tut-row">
+            <div class="tut-icon-wrap tut-icon-wrap--skip" aria-hidden="true">✕</div>
+            <div class="tut-content">
+              <strong>Pular</strong>
+              <p>Se o tempo apertar, essa pode ficar para uma próxima visita</p>
+            </div>
+          </div>
+          <div class="tut-row">
+            <div class="tut-icon-wrap tut-icon-wrap--like" aria-hidden="true">♥</div>
+            <div class="tut-content">
+              <strong>Curtir</strong>
+              <p>Quer ir! Vamos tentar encaixar no roteiro do dia</p>
+            </div>
+          </div>
+          <div class="tut-row">
+            <div class="tut-icon-wrap tut-icon-wrap--superlike" aria-hidden="true">★</div>
+            <div class="tut-content">
+              <strong>Imperdível!</strong>
+              <p>Temos que ir — prioridade máxima no planejamento do dia</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-footer">
+          <button class="btn btn--primary" id="tut-next">Próximo →</button>
+        </div>
+
+      </div>
+    </div>
+
   </main>
 
   <script src="js/data.js"></script>

@@ -13,6 +13,12 @@ async function seedVotes(page, reaction, voterName) {
 }
 
 test.describe('M3 — Results & Edit', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(function () {
+      localStorage.setItem('mkTutorialSeen', '1');
+    });
+  });
+
   test('results page redirects to vote when no votes', async ({ page }) => {
     await page.goto('/results.html');
     await expect(page).toHaveURL(/\/vote/);

@@ -712,6 +712,120 @@ body.page--vote {
 }
 
 /* ══════════════════════════════════════════════════════
+   TUTORIAL OVERLAY
+   ══════════════════════════════════════════════════════ */
+
+.tutorial-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+}
+
+.tutorial-backdrop {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+  min-height: 60px; /* always show a sliver of the card */
+}
+
+@keyframes tut-slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.tutorial-panel {
+  background: #141829;
+  border-radius: 20px 20px 0 0;
+  padding: 1.25rem 1rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: tut-slide-up 0.25s ease;
+}
+
+.tutorial-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tutorial-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.tutorial-dots {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.tut-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-border);
+  transition: background 0.2s;
+}
+
+.tut-dot--active { background: var(--color-primary-hover); }
+
+.tutorial-slide {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tut-row {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tut-row:last-child { border-bottom: none; }
+
+.tut-icon-wrap {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.tut-icon-wrap--neutral  { background: var(--color-border);           color: var(--color-text);       font-size: 0.85rem; }
+.tut-icon-wrap--skip     { background: rgba(240,  80, 112, 0.15);     color: #f05070; }
+.tut-icon-wrap--like     { background: rgba( 82, 196, 122, 0.15);     color: #52c47a; }
+.tut-icon-wrap--superlike{ background: rgba(245, 197,  24, 0.15);     color: var(--color-gold); }
+
+.tut-content { flex: 1; }
+
+.tut-content strong {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.2rem;
+}
+
+.tut-content p {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.tutorial-footer { padding-top: 0.25rem; }
+
+.tutorial-footer .btn { width: 100%; }
+
+/* ══════════════════════════════════════════════════════
    RESULTS SCREEN
    ══════════════════════════════════════════════════════ */
 

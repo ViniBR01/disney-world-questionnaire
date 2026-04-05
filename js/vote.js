@@ -11,6 +11,7 @@
   var progressText = document.getElementById('progress-text');
   var navPanel = document.getElementById('nav-panel');
   var navBackdrop = document.getElementById('nav-backdrop');
+  var tutSlide = 1;
 
   // ── Init ──────────────────────────────────────────────────────────────────
   function init() {
@@ -25,6 +26,7 @@
     updateProgress();
     renderCards();
     bindVoteButtons();
+    initTutorial();
   }
 
   function updateProgress() {
@@ -300,6 +302,35 @@
     });
     document.getElementById('nav-close').addEventListener('click', closeNav);
     navBackdrop.addEventListener('click', closeNav);
+  }
+
+  // ── Tutorial ──────────────────────────────────────────────────────────────
+  function initTutorial() {
+    if (localStorage.getItem('mkTutorialSeen')) return;
+    var overlay = document.getElementById('tutorial-overlay');
+    overlay.hidden = false;
+
+    document.getElementById('tut-next').addEventListener('click', advanceTutorial);
+    document.getElementById('tutorial-backdrop').addEventListener('click', dismissTutorial);
+  }
+
+  function advanceTutorial() {
+    if (tutSlide === 1) {
+      document.getElementById('tut-slide-1').hidden = true;
+      document.getElementById('tut-slide-2').hidden = false;
+      document.getElementById('tut-dot-1').classList.remove('tut-dot--active');
+      document.getElementById('tut-dot-2').classList.add('tut-dot--active');
+      document.getElementById('tut-title').textContent = 'Como avaliar';
+      document.getElementById('tut-next').textContent = 'Começar! →';
+      tutSlide = 2;
+    } else {
+      dismissTutorial();
+    }
+  }
+
+  function dismissTutorial() {
+    localStorage.setItem('mkTutorialSeen', '1');
+    document.getElementById('tutorial-overlay').hidden = true;
   }
 
   // ── Navigation panel ──────────────────────────────────────────────────────

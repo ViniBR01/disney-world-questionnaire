@@ -8,6 +8,7 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(function (creds) {
     window.SUPABASE_URL = creds.url;
     window.SUPABASE_ANON_KEY = creds.key;
+    localStorage.setItem('mkTutorialSeen', '1');
   }, { url: SUPABASE_URL, key: SUPABASE_ANON_KEY });
 });
 

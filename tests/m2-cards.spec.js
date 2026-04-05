@@ -3,6 +3,12 @@ import { test, expect } from '@playwright/test';
 const TOTAL = 37;
 
 test.describe('M2 — Card UI', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(function () {
+      localStorage.setItem('mkTutorialSeen', '1');
+    });
+  });
+
   test('vote page loads', async ({ page }) => {
     await page.goto('/vote.html');
     await expect(page).toHaveTitle(/Magic Kingdom/);
