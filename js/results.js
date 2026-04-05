@@ -87,7 +87,7 @@
       '<span class="result-item__emoji" aria-hidden="true">' + exp.emoji + '</span>' +
       '<div class="result-item__info">' +
         '<span class="result-item__name">' + exp.name + '</span>' +
-        '<span class="badge badge--category">' + categoryLabel(exp.category) + '</span>' +
+        '<span class="badge badge--category">' + categoryLabel(exp) + '</span>' +
       '</div>' +
       '<span class="vote-indicator vote-indicator--' + reaction + '" aria-hidden="true">' +
         voteIcon(reaction) +
@@ -330,11 +330,9 @@
     return '✕';
   }
 
-  function categoryLabel(c) {
-    if (c === 'ride')      return 'Atração';
-    if (c === 'parade')    return 'Desfile';
-    if (c === 'fireworks') return 'Fogos';
-    return 'Show';
+  function categoryLabel(exp) {
+    var sub = SUBCATEGORIES[exp.subcategory];
+    return sub ? sub.label : 'Atração';
   }
 
   init();

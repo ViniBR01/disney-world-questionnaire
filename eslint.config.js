@@ -7,6 +7,7 @@ export default [
       globals: {
         ...globals.browser,
         EXPERIENCES: 'readonly',
+        SUBCATEGORIES: 'readonly',
       },
       ecmaVersion: 2022,
       sourceType: 'script',

@@ -50,12 +50,9 @@
     var photos = exp.photos || [];
     var photoCount = photos.length;
     var hasPhotos = photoCount > 0;
+    var subcat = SUBCATEGORIES[exp.subcategory] || SUBCATEGORIES.show;
 
-    var thrillBadge = exp.thrill
-      ? '<span class="badge badge--' + exp.thrill + '">' + thrillLabel(exp.thrill) + '</span>'
-      : '';
-
-    // Photo strip — each image takes 100% of the wrap width
+    // Photo strip
     var stripHtml = '';
     photos.forEach(function (photo, i) {
       var onerrorAttr = i === 0
@@ -66,7 +63,7 @@
         ' loading="' + (i === 0 ? 'eager' : 'lazy') + '"' + onerrorAttr + '>';
     });
 
-    // Dot indicators — pill shape for active dot
+    // Dot indicators
     var dotsHtml = '';
     if (photoCount > 1) {
       dotsHtml = '<div class="photo-dots" aria-hidden="true">';
@@ -76,31 +73,44 @@
       dotsHtml += '</div>';
     }
 
-    // Arrow buttons — prev starts hidden (first photo)
-    var arrowsHtml = '';
-    if (photoCount > 1) {
-      arrowsHtml =
-        '<button class="photo-nav photo-nav--prev photo-nav--hidden" aria-label="Foto anterior" tabindex="-1">&#8249;</button>' +
-        '<button class="photo-nav photo-nav--next" aria-label="Próxima foto" tabindex="-1">&#8250;</button>';
+    // Arrow buttons
+    var arrowsHtml = photoCount > 1
+      ? '<button class="photo-nav photo-nav--prev photo-nav--hidden" aria-label="Foto anterior" tabindex="-1">&#8249;</button>' +
+        '<button class="photo-nav photo-nav--next" aria-label="Próxima foto" tabindex="-1">&#8250;</button>'
+      : '';
+
+    // Stats rows
+    var statsHtml =
+      '<div class="card__stats">' +
+        '<div class="card__stat">' +
+          '<span class="card__stat-icon">⏱</span>' +
+          '<span class="card__stat-label">Duração</span>' +
+          '<span class="card__stat-value">' + (exp.duration || '—') + '</span>' +
+        '</div>';
+    if (exp.speed) {
+      statsHtml +=
+        '<div class="card__stat card__stat--speed">' +
+          '<span class="card__stat-icon">⚡</span>' +
+          '<span class="card__stat-label">Vel. Máxima</span>' +
+          '<span class="card__stat-value">' + exp.speed + '</span>' +
+        '</div>';
     }
+    statsHtml += '</div>';
 
     div.innerHTML =
       '<div class="card__img-wrap' + (!hasPhotos ? ' card__img-wrap--error' : '') + '">' +
         '<div class="photo-strip">' + stripHtml + '</div>' +
-        dotsHtml +
-        arrowsHtml +
+        dotsHtml + arrowsHtml +
         '<div class="card__img-fallback" aria-hidden="true">' + exp.emoji + '</div>' +
       '</div>' +
+      '<div class="card__category-bar" style="background:' + subcat.bg + ';color:' + subcat.fg + '">' +
+        '<span class="catbar__label">' + subcat.icon + '\u00a0' + subcat.label + '</span>' +
+        '<span class="catbar__year">' + exp.year + '</span>' +
+      '</div>' +
       '<div class="card__body">' +
-        '<div class="card__badges">' + thrillBadge +
-          '<span class="badge badge--category">' + categoryLabel(exp.category) + '</span>' +
-        '</div>' +
         '<h2 class="card__name">' + exp.name + '</h2>' +
+        statsHtml +
         '<p class="card__desc">' + exp.description + '</p>' +
-        '<div class="card__tip">' +
-          '<span aria-hidden="true">💡</span>' +
-          '<p>' + exp.tip + '</p>' +
-        '</div>' +
       '</div>';
 
     return div;
@@ -271,20 +281,6 @@
     document.getElementById('back-btn').addEventListener('click', function () {
       window.location.href = 'index.html';
     });
-  }
-
-  // ── Helpers ───────────────────────────────────────────────────────────────
-  function thrillLabel(t) {
-    if (t === 'calm') return 'Tranquilo';
-    if (t === 'moderate') return 'Moderado';
-    return 'Radical';
-  }
-
-  function categoryLabel(c) {
-    if (c === 'ride')      return 'Atração';
-    if (c === 'parade')    return 'Desfile';
-    if (c === 'fireworks') return 'Fogos';
-    return 'Show';
   }
 
   init();

@@ -19,9 +19,11 @@ test.describe('M2 — Card UI', () => {
     await expect(page.locator('.card--current .card__desc')).toBeVisible();
   });
 
-  test('first card has at least one badge', async ({ page }) => {
+  test('first card has a category bar with label and year', async ({ page }) => {
     await page.goto('/vote.html');
-    await expect(page.locator('.card--current .badge').first()).toBeVisible();
+    await expect(page.locator('.card--current .card__category-bar')).toBeVisible();
+    await expect(page.locator('.card--current .catbar__label')).toBeVisible();
+    await expect(page.locator('.card--current .catbar__year')).toBeVisible();
   });
 
   test('skip button advances to card 2', async ({ page }) => {
