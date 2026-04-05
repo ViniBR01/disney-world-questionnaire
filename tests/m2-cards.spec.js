@@ -22,7 +22,7 @@ test.describe('M2 — Card UI', () => {
   test('first card has a category bar with label and year', async ({ page }) => {
     await page.goto('/vote.html');
     await expect(page.locator('.card--current .card__category-bar')).toBeVisible();
-    await expect(page.locator('.card--current .catbar__label')).toBeVisible();
+    await expect(page.locator('.card--current .catbar__badge')).toBeVisible();
     await expect(page.locator('.card--current .catbar__year')).toBeVisible();
   });
 

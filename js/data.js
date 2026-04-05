@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 var SUBCATEGORIES = {
   coaster:  { label: 'Montanhas-Russas',       bg: '#b71c1c', fg: '#fff', icon: '🎢' },
-  darkride: { label: 'Dark Rides & Barco',     bg: '#1a237e', fg: '#fff', icon: '⛵' },
+  darkride: { label: 'Passeios Lentos',        bg: '#1a237e', fg: '#fff', icon: '⛵' },
   show:     { label: 'Shows & Entretenimento', bg: '#1b5e20', fg: '#fff', icon: '🎭' },
   spinner:  { label: 'Carrosséis & Transporte',bg: '#bf360c', fg: '#fff', icon: '🎡' },
   parade:   { label: 'Desfiles & Fogos',       bg: '#4a148c', fg: '#fff', icon: '✨' }
@@ -45,7 +45,7 @@ var EXPERIENCES = [
     subcategory: 'coaster',
     category: 'ride', thrill: 'moderate', emoji: '🐸',
     photos: ['assets/photos/tianas_bayou/01.jpg','assets/photos/tianas_bayou/02.jpg','assets/photos/tianas_bayou/03.jpg'],
-    year: 2024, speed: '64 km/h', duration: '11 min',
+    year: 2024, speed: '64 km/h (queda final)', duration: '11 min',
     description: 'Log flume com cenários musicais de Louisiana culminando em uma descida vertiginosa — você VAI se molhar!',
     tip: 'Leve muda de roupa ou capa descartável. Melhor de manhã, antes do calor.'
   },

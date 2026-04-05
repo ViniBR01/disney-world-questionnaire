@@ -102,15 +102,17 @@
         '<div class="photo-strip">' + stripHtml + '</div>' +
         dotsHtml + arrowsHtml +
         '<div class="card__img-fallback" aria-hidden="true">' + exp.emoji + '</div>' +
-      '</div>' +
-      '<div class="card__category-bar" style="background:' + subcat.bg + ';color:' + subcat.fg + '">' +
-        '<span class="catbar__label">' + subcat.icon + '\u00a0' + subcat.label + '</span>' +
-        '<span class="catbar__year">' + exp.year + '</span>' +
-      '</div>' +
-      '<div class="card__body">' +
-        '<h2 class="card__name">' + exp.name + '</h2>' +
-        statsHtml +
-        '<p class="card__desc">' + exp.description + '</p>' +
+        '<div class="card__info">' +
+          '<div class="card__category-bar">' +
+            '<span class="catbar__badge" style="background:' + subcat.bg + ';color:' + subcat.fg + '">' +
+              subcat.icon + '\u00a0' + subcat.label +
+            '</span>' +
+            '<span class="catbar__year">' + exp.year + '</span>' +
+          '</div>' +
+          '<h2 class="card__name">' + exp.name + '</h2>' +
+          statsHtml +
+          '<p class="card__desc">' + exp.description + '</p>' +
+        '</div>' +
       '</div>';
 
     return div;
